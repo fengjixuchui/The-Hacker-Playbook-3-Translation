@@ -962,7 +962,7 @@ Empire 模块：powershell/credentials/mimikatz/dcsync_hashdump
 
 ![](../images/chapter_4/4-46.png)
 
-首先，我们需要设置一个 VPS 服务器，启用开放到公网的多个端口，用 PTF 配置 Metasploit，并用 Meterpreter 攻陷最初的受害者。我们也可以用 Cobalt Strike 或其他框架来实现这一点，但在本例中我们将使用 Meterpreter。
+首先，我们需要设置一个 VPS 服务器，启用开放到公网的多个端口，用 PTH 配置 Metasploit，并用 Meterpreter 攻陷最初的受害者。我们也可以用 Cobalt Strike 或其他框架来实现这一点，但在本例中我们将使用 Meterpreter。
 
 我们可以利用默认的 SSH 客户机，使用本地端口转发（-L）。在这个场景中，我使用的是 Mac，但这也可以在 Windows 或 Linux 系统上完成。我们将使用 SSH 密钥通过 SSH 连接到我们的 VPS。我们还将在攻击者机器上配置本地端口，在本例中是3389（RDP），以将任何发送到该端口的流量转发到我们的 VPS。当该端口上的流量转发到我们的 VPS 时，它会将该流量发送到 VPS 上 3389 端口上的本地主机。最后，我们需要在 3389 端口上设置一个监听我们的 VPS 的端口，并使用 Meterpreter 的端口转发功能通过被攻陷的受害机器设置一个端口转发，以能连接到受害者的系统。
 
@@ -986,7 +986,7 @@ Empire 模块：powershell/credentials/mimikatz/dcsync_hashdump
 - Meterpreter:
   - portfwd add –l 3389 –p 3389 –r <target_IP>
 
-如果你幸运地获得了一个 SSH shell，那么我们可以通过该系统进行渗透。我们如何获得 SSH shell 呢？在许多情况下，一旦我们可以实现本地文件包含（LFI）或远程代码执行（RCE），我们可以尝试权限升级以读取 /etc/shadow 文件（和密码破解），或者我们可以利用一些 Mimimikatz 风格的方法。
+如果你幸运地获得了一个 SSH shell，那么我们可以通过该系统进行渗透。我们如何获得 SSH shell 呢？在许多情况下，一旦我们可以实现本地文件包含（LFI）或远程代码执行（RCE），我们可以尝试权限升级以读取 /etc/shadow 文件（和密码破解），或者我们可以利用一些 Mimikatz 风格的方法。
 
 与 Windows 和 Mimikatz 一样，Linux 系统也有同样的问题，密码以明文形式存储。@huntergregal 编写的工具可以转储特定进程，这些进程很可能以明文形式包含用户的密码。尽管迄今为止，这只适用于有限版本的 Linux 系统，但这个相同的概念可以在整个系统中使用。你可以在这里准确地看到哪些系统以及从何处获取密码：
 
